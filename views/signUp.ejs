@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>>
+</head>
+<body>
+    <form action="/sign-up" method="post" class="sign-up-form">
+        <h1>Sign Up</h1>
+        <label for="first-name">First name: <input type="text" name="firstName" id="first-name" required></label>
+        <label for="last-name">Last name: <input type="text" name="lastName" id="last-name" required></label>
+        <label for="username">Username: <input type="text" name="username" id="username" required></label>
+        <label for="password">Password: <input type="password" name="password" id="password" required></label>
+        <label for="confirm-password">Confirm Password: <input type="password" name="confirmPassword" id="confirm-password" required></label>
+
+        <button type="submit">Sign Up</button>
+
+        <a href="/" class="return"> <- Return To Home</a>
+
+        <% if (locals.errors || locals.passwordError) {%>
+            <div class="error-container">
+                <% errors.map((error) => { %>
+                    <p><%= error.msg %></p>
+                <% }) %>
+                <% if (locals.passwordError) {%>
+                    <p><%= passwordError %></p>
+                <% } %>
+            </div>
+        <% } %>
+    </form>
+    <div class="from-in-to-up">
+        <p>Already have an account? </p>
+        <a href="/sign-in">Sign In</a>
+    </div>
+    
+</body>
+</html>

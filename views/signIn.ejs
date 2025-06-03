@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body>
+    <form action="/sign-in" method="post" class="sign-up-form">
+        <h1>Sign In</h1>
+        <label for="username">Username: <input type="text" name="username" id="username" required></label>
+        <label for="password">Password: <input type="password" name="password" id="password" required></label>
+
+        <button type="submit">Sign In</button>
+
+        <a href="/" class="return"> <- Return To Home</a>
+    </form>
+    <div class="from-in-to-up">
+        <p>Don't have an Account? </p>
+        <a href="/sign-up">Create an Account</a>
+    </div>
+</body>
+</html>

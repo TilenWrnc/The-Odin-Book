@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  full_name String
+  username  String    @unique
+  password  String
+  messages  message[]
+  folders   folder[]
+
+  friends   user[] @relation("UserFriends")
+  friendOf  user[] @relation("UserFriends")
+}
+
+model message {
+  id       Int      @id @default(autoincrement())
+  text     String
+  date     DateTime
+  authorId Int
+  author   user     @relation(fields: [authorId], references: [id])
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String    
+  expiresAt   DateTime
+}
+
+model folder {
+  id             Int      @id @default(autoincrement())
+  folder_name    String   
+  date           DateTime
+  folderAuthorId Int
+  folderAuthor   user     @relation(fields: [folderAuthorId], references: [id])
+
+  parentFolderId  Int?      // Nullable for root folders
+  parentFolder    folder?   @relation("FolderHierarchy", fields: [parentFolderId], references: [id], onDelete: Cascade)
+  subFolders      folder[]  @relation("FolderHierarchy")
+
+  download_name   String?
+  type            String
+  size            String?
+}
+
+model chat {
+  id             Int       @id @default(autoincrement())
+  currentUser    Int
+  recievingUser  Int
+
+  chatContent    chatMessage[]
+}
+
+model chatMessage {
+  id             Int       @id @default(autoincrement())
+  chat           chat      @relation(fields: [chatId], references: [id])
+  chatId         Int
+  senderId       Int
+  content        String
+  timestamp      DateTime
+}
+
